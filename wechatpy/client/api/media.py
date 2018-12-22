@@ -23,7 +23,7 @@ class WeChatMedia(BaseWeChatAPI):
         """
         return self._post(url="media/upload", params={"type": media_type}, files={"media": media_file})
 
-    def download(self, media_id):
+    def download(self, media_id, high_quality=False):
         """
         获取临时素材
         详情请参考
@@ -33,7 +33,12 @@ class WeChatMedia(BaseWeChatAPI):
 
         :return: requests 的 Response 实例
         """
-        return self._get("media/get", params={"media_id": media_id})
+        return self._get(
+            'media/get%s' % ('/jssdk' if high_quality else ''),
+            params={
+                'media_id': media_id
+            }
+        )
 
     def get_url(self, media_id):
         """
